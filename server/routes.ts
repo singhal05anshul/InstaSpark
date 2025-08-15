@@ -10,6 +10,25 @@ import {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
+  // Root route - Landing page for the API
+  app.get("/", (req, res) => {
+    res.json({
+      message: "Dating App API",
+      version: "1.0.0",
+      endpoints: {
+        users: "/api/users",
+        venues: "/api/venues", 
+        matches: "/api/users/:userId/matches",
+        messages: "/api/matches/:matchId/messages",
+        quickOffers: "/api/quick-offers"
+      },
+      mobile: {
+        description: "This API serves a React Native mobile app",
+        webVersion: "Run 'cd mobile/DatingApp && npm run web' for web version"
+      }
+    });
+  });
+
   // User routes
   app.post("/api/users", async (req, res) => {
     try {

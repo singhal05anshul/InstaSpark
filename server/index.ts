@@ -63,8 +63,9 @@ app.use((req, res, next) => {
     throw err;
   });
 
-  // Note: Web UI now served by React Native Web on port 3000
-  // This server only provides the API
+  // Note: This server provides the API for the React Native mobile app
+  // For web version: cd mobile/DatingApp && npm run web (serves on port 3000)
+  // Mobile development: cd mobile/DatingApp && npm run android/ios
 
   // ALWAYS serve the app on the port specified in the environment variable PORT
   // Other ports are firewalled. Default to 5000 if not specified.
