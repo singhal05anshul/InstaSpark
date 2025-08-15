@@ -6,7 +6,7 @@ import {
   insertSwipeSchema, 
   insertMessageSchema, 
   insertQuickOfferSchema 
-} from "@shared/schema";
+} from "../shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
@@ -24,7 +24,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       },
       mobile: {
         description: "This API serves a React Native mobile app",
-        webVersion: "Run 'cd mobile/DatingApp && npm run web' for web version"
+        webVersion: "Run 'cd client && npm run web' for web version"
       }
     });
   });

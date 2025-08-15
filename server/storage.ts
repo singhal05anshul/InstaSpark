@@ -5,7 +5,7 @@ import {
   type Swipe, type InsertSwipe,
   type Message, type InsertMessage,
   type QuickOffer, type InsertQuickOffer
-} from "@shared/schema";
+} from "../shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -92,6 +92,10 @@ export class MemStorage implements IStorage {
     const user: User = { 
       ...insertUser, 
       id,
+      bio: insertUser.bio ?? null,
+      photos: insertUser.photos ?? [],
+      currentVenueId: insertUser.currentVenueId ?? null,
+      isActive: insertUser.isActive ?? true,
       lastSeen: new Date(),
       createdAt: new Date(),
     };
@@ -153,6 +157,7 @@ export class MemStorage implements IStorage {
     const match: Match = { 
       ...insertMatch, 
       id,
+      isActive: insertMatch.isActive ?? true,
       matchedAt: new Date(),
     };
     this.matches.set(id, match);
@@ -211,6 +216,7 @@ export class MemStorage implements IStorage {
     const offer: QuickOffer = { 
       ...insertOffer, 
       id,
+      status: insertOffer.status ?? "pending",
       sentAt: new Date(),
     };
     this.quickOffers.set(id, offer);

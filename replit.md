@@ -2,7 +2,7 @@
 
 This is a location-based dating application that connects people at the same venue in real-time. Users can discover and swipe on other users who are currently at their venue, send quick offers like "Can I buy you a drink?", and chat with matches. The app emphasizes immediate, in-person connections by focusing on shared physical proximity rather than traditional online dating.
 
-**IMPORTANT**: This project has been migrated to React Native with React Native Web support. The app runs natively on iOS/Android and can be tested on desktop via React Native Web. All code is in mobile/DatingApp/ - no separate web codebase needed.
+**IMPORTANT**: This project uses npm workspaces with a React Native client and Express server. The app runs natively on iOS/Android and can be tested on desktop via React Native Web. Client code is in `client/` (formerly mobile/DatingApp), server code is in `server/`, and shared schemas are in `shared/`.
 
 # User Preferences
 
@@ -59,6 +59,16 @@ Preferred communication style: Simple, everyday language.
 
 ## Running the Application
 - **API Backend**: `npm run dev` (serves on port 5000)
-- **Mobile Development**: `cd mobile/DatingApp && npm run android/ios`
-- **Web Development**: `cd mobile/DatingApp && npm run web` (serves on port 3000)
+- **Web Development**: `cd client && npm run web` (serves on port 3000)  
+- **Mobile Development**: `cd client && npm run android/ios`
 - **Single Codebase**: Same React Native code runs on mobile and web
+
+## Workspace Structure
+- **Root**: Workspace configuration and shared dependencies
+- **client/**: React Native app with web support (formerly mobile/DatingApp)
+- **server/**: Express API server with TypeScript
+- **shared/**: Common schemas and types used by both client and server
+
+## Clean Installation
+- **Clean Install**: `npm run clean` - Removes all node_modules and reinstalls
+- **Workspace Install**: `npm install --workspaces` - Install dependencies for all workspaces
