@@ -14,6 +14,11 @@ module.exports = {
       '@': path.resolve(__dirname, 'src'),
     },
     extensions: ['.web.js', '.js', '.web.ts', '.ts', '.web.tsx', '.tsx', '.json'],
+    modules: [
+      path.resolve(__dirname, 'node_modules'),
+      path.resolve(__dirname, '../../node_modules'), // Look in parent node_modules
+      'node_modules'
+    ],
   },
   module: {
     rules: [
