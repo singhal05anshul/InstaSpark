@@ -241,6 +241,18 @@ lsof -ti:3000 | xargs kill -9  # React Native Web
 lsof -ti:8081 | xargs kill -9  # Metro bundler
 ```
 
+#### 6. macOS Socket Issues (ENOTSUP)
+```bash
+# If you get "operation not supported on socket" errors:
+# 1. Check if port is already in use
+lsof -i :5000
+
+# 2. Try different port
+PORT=3001 npm run dev
+
+# 3. Use localhost instead of 0.0.0.0 (already fixed in current version)
+```
+
 ## 📊 API Documentation
 
 The backend provides a RESTful API with the following endpoints:

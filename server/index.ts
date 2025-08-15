@@ -80,11 +80,8 @@ app.use((req, res, next) => {
   // Other ports are firewalled. Default to 5000 if not specified.
   // This serves only the API backend - client runs separately.
   const port = parseInt(process.env.PORT || '5000', 10);
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
+  
+  server.listen(port, () => {
     log(`serving on port ${port}`);
   });
 })();
