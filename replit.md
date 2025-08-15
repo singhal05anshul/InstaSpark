@@ -1,0 +1,56 @@
+# Overview
+
+This is a location-based dating application that connects people at the same venue in real-time. Users can discover and swipe on other users who are currently at their venue, send quick offers like "Can I buy you a drink?", and chat with matches. The app emphasizes immediate, in-person connections by focusing on shared physical proximity rather than traditional online dating.
+
+# User Preferences
+
+Preferred communication style: Simple, everyday language.
+
+# System Architecture
+
+## Frontend Architecture
+- **React with TypeScript**: Modern React application using functional components and hooks
+- **Wouter for Routing**: Lightweight client-side routing solution instead of React Router
+- **Shadcn/ui Components**: Comprehensive UI component library built on Radix UI primitives
+- **TanStack Query**: Handles server state management, caching, and API calls
+- **Tailwind CSS**: Utility-first CSS framework with custom design tokens and dark mode support
+- **Mobile-First Design**: Responsive design optimized for mobile devices with touch interactions
+
+## Backend Architecture
+- **Express.js Server**: RESTful API server with middleware for logging and error handling
+- **In-Memory Storage**: Development storage implementation using Maps for rapid prototyping
+- **Modular Route Handlers**: Organized API endpoints for users, venues, matches, swipes, messages, and quick offers
+- **Schema Validation**: Zod schemas for request validation and type safety
+
+## Data Storage Solutions
+- **Drizzle ORM**: Type-safe SQL query builder configured for PostgreSQL
+- **PostgreSQL Database**: Production database with Neon serverless hosting
+- **Schema Design**: Well-structured tables for users, venues, matches, swipes, messages, and quick offers
+- **Dual Storage Pattern**: In-memory storage for development with database abstraction layer for production migration
+
+## Authentication and Authorization
+- **Demo User System**: Currently uses hardcoded demo user IDs for development
+- **Session Management**: Prepared for cookie-based sessions with connect-pg-simple
+- **User Context**: Frontend tracks current user state across components
+
+## External Dependencies
+- **Neon Database**: Serverless PostgreSQL hosting for production
+- **Geolocation API**: Browser-based location services for venue proximity
+- **Radix UI**: Accessible component primitives for complex UI interactions
+- **Vite Build System**: Fast development server with HMR and optimized production builds
+- **ESBuild**: Production bundling for the Express server
+
+## Key Features
+- **Real-time Venue Tracking**: Users check into venues and see others at the same location
+- **Swipe Mechanics**: Tinder-style card swiping with touch gesture support
+- **Quick Offers**: Pre-defined conversation starters like drink offers
+- **Match System**: Mutual likes create matches enabling chat
+- **Responsive Chat**: Real-time messaging between matched users
+- **Location Services**: Automatic venue discovery based on user location
+
+## Development Workflow
+- **TypeScript**: Full type safety across frontend, backend, and shared schemas
+- **Path Aliases**: Clean imports using @ and @shared prefixes
+- **Hot Reload**: Vite development server with instant updates
+- **Build Process**: Separate builds for client (Vite) and server (ESBuild)
+- **Database Migrations**: Drizzle Kit for schema management and migrations
