@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dating App - Development</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #fff;
+        }
+        #root {
+            height: 100vh;
+            width: 100%;
+        }
+        /* Mobile-like container for development */
+        @media (min-width: 768px) {
+            #root {
+                max-width: 390px;
+                margin: 0 auto;
+                border: 1px solid #ddd;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="/bundle.js"></script>
+</body>
+</html>

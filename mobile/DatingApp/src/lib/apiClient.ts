@@ -1,7 +1,16 @@
 import { QueryClient } from '@tanstack/react-query';
 
-// Configuration
-const API_BASE_URL = 'http://localhost:5000/api'; // TODO: Update for production
+// Configuration - automatically detect if running on web or mobile
+const getApiBaseUrl = () => {
+  // Check if running in React Native Web (browser)
+  if (typeof window !== 'undefined') {
+    return 'http://localhost:5000/api'; // Web development
+  }
+  // React Native mobile
+  return 'http://localhost:5000/api'; // TODO: Update for production/device testing
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Default fetch function for React Query
 const defaultQueryFn = async ({ queryKey }: { queryKey: readonly unknown[] }) => {
