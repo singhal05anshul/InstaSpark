@@ -2,6 +2,8 @@
 
 This is a location-based dating application that connects people at the same venue in real-time. Users can discover and swipe on other users who are currently at their venue, send quick offers like "Can I buy you a drink?", and chat with matches. The app emphasizes immediate, in-person connections by focusing on shared physical proximity rather than traditional online dating.
 
+**IMPORTANT**: This project has been migrated to React Native for native mobile development. The original web app remains in the client/ directory, while the new React Native app is located in mobile/DatingApp/.
+
 # User Preferences
 
 Preferred communication style: Simple, everyday language.

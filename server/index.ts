@@ -1,8 +1,24 @@
 import express, { type Request, Response, NextFunction } from "express";
+import cors from "cors";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+
+// Configure CORS for React Native and web clients
+app.use(cors({
+  origin: [
+    'http://localhost:5000',
+    'http://127.0.0.1:5000',
+    'http://10.0.2.2:5000',     // Android emulator
+    'http://localhost:19006',   // Expo development
+    /^http:\/\/192\.168\.\d+\.\d+:5000$/, // Local network
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
