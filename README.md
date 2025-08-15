@@ -211,17 +211,26 @@ rm -rf client/node_modules server/node_modules
 npm install --workspaces
 ```
 
-#### 3. Server Dependencies Missing (tsx, vite)
+#### 3. Missing Webpack Dependencies (Client)
 ```bash
-# Check server dependencies
-cd server && npm list tsx vite
+# If you get "webpack: command not found" when running web:
+cd client
+npm install
 
-# If missing, add to server package.json devDependencies:
-# "tsx": "^4.19.1"
-# "vite": "^5.4.19"
+# Or install specific webpack dependencies:
+npm install --save-dev webpack webpack-cli webpack-dev-server babel-loader
 ```
 
-#### 4. React Native Dependencies
+#### 4. Server Dependencies Missing (tsx)
+```bash
+# Check server dependencies
+cd server && npm list tsx
+
+# If missing, install in server workspace:
+npm install --save-dev tsx
+```
+
+#### 5. React Native Dependencies
 ```bash
 # iOS: Pod installation
 cd client/ios && pod install && cd ../..
@@ -233,7 +242,7 @@ cd client/android && ./gradlew clean && cd ../..
 cd client && npx react-native start --reset-cache
 ```
 
-#### 5. Port Conflicts
+#### 6. Port Conflicts
 ```bash
 # Kill processes on development ports
 lsof -ti:5000 | xargs kill -9  # Backend
@@ -241,7 +250,7 @@ lsof -ti:3000 | xargs kill -9  # React Native Web
 lsof -ti:8081 | xargs kill -9  # Metro bundler
 ```
 
-#### 6. macOS Socket Issues (ENOTSUP)
+#### 7. macOS Socket Issues (ENOTSUP)
 ```bash
 # If you get "operation not supported on socket" errors:
 # 1. Check if port is already in use
