@@ -1,177 +1,138 @@
-# Dating App - Complete macOS Setup Guide
+# Dating App - Npm Workspace Setup Guide
 
-This guide provides step-by-step instructions to set up and run the React Native dating app on macOS using Visual Studio Code.
+This is a location-based dating application built with React Native (mobile + web) and Express.js backend using npm workspaces for dependency management.
 
 ## 📋 Prerequisites
 
-### 1. Install Homebrew (if not installed)
+### 1. Install Node.js (v18 or higher)
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
-
-### 2. Install Node.js (v18 or higher)
-```bash
+# macOS with Homebrew
 brew install node
+
 # Verify installation
 node --version  # Should be v18+
 npm --version
 ```
 
-### 3. Install Visual Studio Code
-Download from: https://code.visualstudio.com/download
+### 2. Development Tools
+- **Visual Studio Code**: https://code.visualstudio.com/download
+- **React Native CLI**: `npm install -g @react-native-community/cli`
 
-### 4. Install React Native CLI
-```bash
-npm install -g @react-native-community/cli
+### 3. Mobile Development (Optional)
+- **iOS**: Install Xcode from App Store + `xcode-select --install`
+- **Android**: Install Android Studio + React Native environment setup
+
+## 🏗️ Project Architecture
+
+This project uses **npm workspaces** for clean dependency separation:
+
+```
+dating-app-workspace/
+├── client/              # React Native app (mobile + web)
+├── server/              # Express.js API backend  
+├── shared/              # Common TypeScript schemas
+└── package.json         # Workspace configuration
 ```
 
-### 5. Install iOS Development Tools (for iOS testing)
-- Install Xcode from App Store
-- Install Xcode Command Line Tools:
+## 🚀 Quick Start
+
+### 1. Install All Dependencies
 ```bash
-xcode-select --install
+# Clean install all workspaces
+npm run clean
+
+# Or install with legacy peer deps (if React Native conflicts)
+npm install --workspaces --legacy-peer-deps
 ```
 
-### 6. Install Android Development Tools (for Android testing)
-- Install Android Studio from: https://developer.android.com/studio
-- Follow React Native environment setup: https://reactnative.dev/docs/environment-setup
-
-## 🚀 Project Setup
-
-### 1. Clone and Navigate to Project
+### 2. Start Development Servers
 ```bash
-# Navigate to your project directory
-cd path/to/your/dating-app-project
-```
-
-### 2. Install Backend Dependencies
-```bash
-# Install main project dependencies
-npm install
-```
-
-### 3. Install React Native App Dependencies
-```bash
-# Navigate to React Native app
-cd mobile/DatingApp
-
-# Install React Native dependencies
-npm install
-
-# Install iOS dependencies (iOS only)
-cd ios && pod install && cd ..
-```
-
-## 🏃‍♂️ Running the Application
-
-### 1. Start the Backend API Server
-```bash
-# In the root project directory
+# Start API backend (runs on port 5000)
 npm run dev
-```
-✅ Backend will be running on: http://localhost:5000
 
-### 2. Running React Native Web (Desktop Testing)
+# Start React Native Web (runs on port 3000)  
+npm run dev:client
+
+# Start Metro bundler for mobile development
+npm run dev:mobile
+```
+
+## 🏃‍♂️ Development Commands
+
+### Backend Development
 ```bash
-# In mobile/DatingApp directory
-npm run web
+npm run dev          # Start Express server (port 5000)
+npm run build        # Build server for production
+npm run start        # Run production server
+npm run check        # TypeScript checking
+npm run db:push      # Push database schema changes
 ```
-✅ Web app will be running on: http://localhost:3000
 
-### 3. Running on Mobile Devices
-
-#### iOS Simulator
+### Frontend Development
 ```bash
-# In mobile/DatingApp directory
-npm run ios
+npm run dev:client   # Start React Native Web (port 3000)
+npm run dev:mobile   # Start Metro bundler for mobile
+
+# Or run directly in client workspace:
+cd client
+npm run web          # React Native Web
+npm run start        # Metro bundler
+npm run ios          # iOS simulator  
+npm run android      # Android emulator
+npm run test         # Run tests
 ```
 
-#### Android Emulator
+### Workspace Management
 ```bash
-# In mobile/DatingApp directory
-npm run android
+npm run clean        # Remove all node_modules and reinstall
+npm install --workspaces # Install dependencies for all workspaces
 ```
 
-#### Physical Devices
-```bash
-# Start Metro bundler
-npm start
+## 📁 Workspace Structure
 
-# Then scan QR code with device or follow device-specific instructions
+This npm workspace contains three main parts:
+
+### **Client Workspace** (`client/`)
+React Native app that runs on mobile and web:
+```
+client/
+├── src/
+│   ├── screens/           # App screens (Home, Matches, Chat, Profile) 
+│   ├── components/        # Reusable components (SwipeCard, etc.)
+│   ├── navigation/        # Navigation setup
+│   ├── lib/              # API client and utilities
+│   └── shared/           # Client-specific utilities
+├── web/                  # React Native Web configuration
+├── ios/                  # iOS native files  
+├── android/              # Android native files
+└── package.json          # Client dependencies (React Native, navigation, etc.)
 ```
 
-## 🛠 Visual Studio Code Setup
-
-### 1. Recommended Extensions
-Install these VS Code extensions:
-- **React Native Tools** - Microsoft
-- **ES7+ React/Redux/React-Native snippets**
-- **TypeScript Hero**
-- **Auto Rename Tag**
-- **Bracket Pair Colorizer**
-- **GitLens**
-
-### 2. Configure VS Code Settings
-Create `.vscode/settings.json`:
-```json
-{
-  "typescript.preferences.importModuleSpecifier": "relative",
-  "typescript.suggest.autoImports": true,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  },
-  "emmet.includeLanguages": {
-    "typescript": "html",
-    "typescriptreact": "html"
-  }
-}
+### **Server Workspace** (`server/`)
+Express.js API backend:
+```
+server/
+├── index.ts              # Server entry point
+├── routes.ts             # API route handlers
+├── storage.ts            # In-memory data storage
+├── vite.ts              # Development server utilities
+└── package.json          # Server dependencies (Express, CORS, etc.)
 ```
 
-### 3. Configure Launch Configuration
-Create `.vscode/launch.json`:
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Debug React Native",
-      "type": "reactnative",
-      "request": "launch",
-      "platform": "ios",
-      "sourceMaps": true,
-      "outDir": "${workspaceFolder}/.vscode/.react"
-    }
-  ]
-}
+### **Shared Resources** (`shared/`)
+Common TypeScript types and schemas:
+```
+shared/
+└── schema.ts             # Drizzle schema definitions and Zod types
 ```
 
-## 📁 Project Structure
-
-```
-dating-app/
-├── mobile/DatingApp/          # React Native mobile app
-│   ├── src/
-│   │   ├── screens/           # App screens (Home, Matches, Chat, Profile)
-│   │   ├── components/        # Reusable components (SwipeCard, etc.)
-│   │   ├── navigation/        # Navigation setup
-│   │   ├── lib/              # API client and utilities
-│   │   └── shared/           # Shared types and schemas
-│   ├── web/                  # React Native Web setup
-│   ├── ios/                  # iOS native files
-│   ├── android/              # Android native files
-│   └── package.json
-├── server/                   # Backend API
-│   ├── index.ts             # Server entry point
-│   ├── routes.ts            # API routes
-│   └── storage.ts           # Data storage
-├── shared/                   # Shared TypeScript types
-└── package.json             # Backend dependencies
-```
-
-## 🧪 Testing the Setup
+## 🧪 Testing Your Setup
 
 ### 1. Verify Backend API
 ```bash
+# Test API root (should show available endpoints)
+curl http://localhost:5000/
+
 # Test venues endpoint
 curl http://localhost:5000/api/venues
 
@@ -183,123 +144,161 @@ curl -X POST http://localhost:5000/api/swipes \
 
 ### 2. Test React Native Web
 1. Open http://localhost:3000 in browser
-2. Should see mobile-style app interface
+2. Should see mobile-style app interface 
 3. Test navigation between tabs
 
-### 3. Test Mobile App
-1. Run on simulator/emulator
-2. Verify all screens load correctly
-3. Test touch interactions and gestures
+### 3. Test Mobile Development
+```bash
+cd client
+npm run start    # Start Metro bundler
+npm run ios      # Run on iOS simulator
+npm run android  # Run on Android emulator
+```
 
 ## 🔧 Development Workflow
 
-### 1. Backend Development
+### Daily Development
 ```bash
-# Make changes to server/ files
-# Server auto-restarts with tsx
+# Terminal 1: Start backend
 npm run dev
+
+# Terminal 2: Start frontend  
+npm run dev:client
+
+# Make changes to files in server/, client/, or shared/
+# Both servers auto-reload on changes
 ```
 
-### 2. Mobile App Development
+### Working with Workspaces
 ```bash
-# In mobile/DatingApp directory
+# Run commands in specific workspace
+npm run <script> --workspace=server
+npm run <script> --workspace=client
 
-# For React Native Web development
-npm run web
+# Install dependency in specific workspace
+npm install <package> --workspace=server
+npm install <package> --workspace=client
 
-# For mobile development
-npm start  # Start Metro bundler
-npm run ios     # Run on iOS
-npm run android # Run on Android
-```
-
-### 3. Database Operations
-```bash
-# Push database schema changes
-npm run db:push
+# Run commands across all workspaces
+npm run test --workspaces
 ```
 
 ## 🐛 Troubleshooting
 
 ### Common Issues and Solutions
 
-#### 1. "Cannot find module" errors
+#### 1. Workspace Installation Issues
 ```bash
-# Delete node_modules and reinstall
-rm -rf node_modules package-lock.json
-npm install
+# Clean reinstall all workspaces
+npm run clean
 
-# For React Native app
-cd mobile/DatingApp
-rm -rf node_modules package-lock.json  
-npm install
+# Install with legacy peer dependencies (for React Native conflicts)
+npm install --workspaces --legacy-peer-deps
+
+# Install dependencies in specific workspace
+npm install --workspace=server
+npm install --workspace=client
 ```
 
-#### 2. iOS Pod Installation Issues
+#### 2. "Cannot find module" errors
 ```bash
-cd mobile/DatingApp/ios
-pod deintegrate
-pod install
+# Check if dependencies are installed in correct workspace
+npm list --workspace=server
+npm list --workspace=client
+
+# Reinstall specific workspace
+rm -rf client/node_modules server/node_modules
+npm install --workspaces
 ```
 
-#### 3. Android Build Issues
+#### 3. Server Dependencies Missing (tsx, vite)
 ```bash
-cd mobile/DatingApp/android
-./gradlew clean
-cd ..
-npm run android
+# Check server dependencies
+cd server && npm list tsx vite
+
+# If missing, add to server package.json devDependencies:
+# "tsx": "^4.19.1"
+# "vite": "^5.4.19"
 ```
 
-#### 4. Metro Bundler Issues
+#### 4. React Native Dependencies
 ```bash
-cd mobile/DatingApp
-npx react-native start --reset-cache
+# iOS: Pod installation
+cd client/ios && pod install && cd ../..
+
+# Android: Clean build
+cd client/android && ./gradlew clean && cd ../..
+
+# Metro cache reset
+cd client && npx react-native start --reset-cache
 ```
 
-#### 5. Port Already in Use
+#### 5. Port Conflicts
 ```bash
-# Kill processes on ports 5000 or 3000
-lsof -ti:5000 | xargs kill -9
-lsof -ti:3000 | xargs kill -9
+# Kill processes on development ports
+lsof -ti:5000 | xargs kill -9  # Backend
+lsof -ti:3000 | xargs kill -9  # React Native Web
+lsof -ti:8081 | xargs kill -9  # Metro bundler
 ```
 
-## 🚀 Deployment Preparation
+## 📊 API Documentation
 
-### 1. Web Deployment
+The backend provides a RESTful API with the following endpoints:
+
+### Core Endpoints
+- `GET /` - API documentation and available endpoints
+- `GET /api/venues` - Get nearby venues with active user counts
+- `GET /api/users/:id` - Get user profile
+- `GET /api/users/:userId/discover/:venueId` - Discover users at venue
+
+### Dating Features  
+- `POST /api/swipes` - Create a swipe (like/pass)
+- `GET /api/users/:userId/matches` - Get user's matches
+- `POST /api/messages` - Send message to match
+- `GET /api/matches/:matchId/messages` - Get match conversation
+
+### Quick Offers
+- `POST /api/quick-offers` - Send quick offer ("Buy you a drink?")
+- `GET /api/users/:userId/quick-offers` - Get pending offers
+- `PATCH /api/quick-offers/:id` - Accept/decline offer
+
+## 🚀 Production Deployment
+
+### Backend (Server Workspace)
 ```bash
-cd mobile/DatingApp
-npm run web:build
-# Deploy web-build/ directory to hosting service
+npm run build --workspace=server  # Build for production
+npm run start --workspace=server  # Run production server
 ```
 
-### 2. Mobile App Store Deployment
-- **iOS**: Archive in Xcode and submit to App Store Connect
-- **Android**: Generate signed APK/AAB in Android Studio
+### Frontend (Client Workspace)
+```bash
+# React Native Web
+cd client && npm run web:build
 
-## 📊 API Endpoints
+# Mobile apps
+# iOS: Archive in Xcode → App Store Connect  
+# Android: Generate signed APK/AAB in Android Studio
+```
 
-### Available Endpoints
-- `GET /api/venues` - Get all venues
-- `GET /api/venues/:id` - Get specific venue
-- `GET /api/users/:id/discover/:venueId` - Discover users at venue
-- `POST /api/swipes` - Create a swipe
-- `GET /api/users/:id/matches` - Get user matches
-- `POST /api/matches/:id/messages` - Send message
-- `POST /api/quick-offers` - Send quick offer
+## 🎯 Development Roadmap
 
-## 🎯 Next Steps
+1. **Setup Complete**: npm workspace structure with clean dependency separation
+2. **Next Steps**: 
+   - Resolve missing server dependencies (tsx, vite)
+   - Complete React Native dependency installation
+   - Add real user authentication
+   - Connect to production database (Neon PostgreSQL)
+3. **Production Ready**: Deploy to app stores and hosting platform
 
-1. **Start Development**: Follow the running instructions above
-2. **Customize Features**: Modify screens and components in `mobile/DatingApp/src/`
-3. **Add Real Data**: Replace demo data with real user authentication
-4. **Deploy**: Follow deployment steps when ready for production
+## 📚 Key Technologies
 
-## 🆘 Getting Help
-
-- **React Native Docs**: https://reactnative.dev/docs/getting-started
-- **React Navigation**: https://reactnavigation.org/docs/getting-started
-- **TypeScript**: https://www.typescriptlang.org/docs/
+- **Workspace Management**: npm workspaces for dependency separation
+- **Backend**: Express.js + TypeScript + Drizzle ORM
+- **Frontend**: React Native + React Navigation + React Query  
+- **Database**: PostgreSQL with Neon hosting
+- **Validation**: Zod schemas for type-safe API contracts
+- **Development**: Hot reload for both server and client
 
 ---
 
-**🎉 You're all set!** Your React Native dating app should now be running on both web and mobile platforms.
+**Your location-based dating app workspace is ready for development!** The npm workspace structure provides clean separation between client, server, and shared code.
